@@ -1,0 +1,813 @@
+<?xml version="1.0" encoding="utf-16"?>
+<nugget name="ABAPZOMBIE_PERFORMANCE_EXAMPLES">
+ <PROG NAME="ZPRES_PERFORMANCE_EXAMPLES" VARCL="X" SUBC="1" CNAM="BCUSER" CDAT="20111024" UNAM="BCUSER" UDAT="20120103" VERN="000154" RMAND="001" RLOAD="E" FIXPT="X" SDATE="20120103" STIME="102906" IDATE="20120103" ITIME="102907" UCCHECK="X">
+  <textPool>
+   <language SPRAS="E">
+    <textElement ID="R" ENTRY="Performance Examples" LENGTH="20 "/>
+   </language>
+  </textPool>
+  <source>*----------------------------------------------------------------------*
+*                     === ABAP ZOMBIE PRESENTS ===                     *
+*----------------------------------------------------------------------*
+*                      Selection Screen Examples                       *
+*----------------------------------------------------------------------*
+* Description -&gt; Compare different code snipets and check wich one is  *
+*                faster!                                               *
+* Date        -&gt; Dez 13, 2011                                          *
+* SAP Version -&gt; 6.0                                                   *
+*----------------------------------------------------------------------*
+* ABAP Zombie Staff: Mauricio Roberto Cruz                             *
+*                    Mauro Cesar Laranjeira                            *
+*                    Priscila Silva
+*----------------------------------------------------------------------*
+* Please, visit us at http://abapzombie.com/ and drop a Comment!   *
+*----------------------------------------------------------------------*
+REPORT  zombie_performance_examples.
+
+
+*--------------------------------------------------------------------*
+* Report Main Screen
+*--------------------------------------------------------------------*
+SELECTION-SCREEN BEGIN OF BLOCK bl01 WITH FRAME TITLE text-001.
+
+PARAMETERS: p_both  RADIOBUTTON GROUP rb01,
+            p_test1 RADIOBUTTON GROUP rb01,
+            p_test2  RADIOBUTTON GROUP rb01.
+
+SELECTION-SCREEN END OF BLOCK bl01.
+
+SELECTION-SCREEN BEGIN OF BLOCK bl02 WITH FRAME TITLE text-002.
+
+PARAMETERS: p_01 RADIOBUTTON GROUP rb02,
+            p_02 RADIOBUTTON GROUP rb02,
+            p_03 RADIOBUTTON GROUP rb02,
+            p_04 RADIOBUTTON GROUP rb02,
+            p_05 RADIOBUTTON GROUP rb02,
+            p_06 RADIOBUTTON GROUP rb02,
+            p_07 RADIOBUTTON GROUP rb02,
+            p_08 RADIOBUTTON GROUP rb02,
+            p_09 RADIOBUTTON GROUP rb02,
+            p_10 RADIOBUTTON GROUP rb02,
+            p_11 RADIOBUTTON GROUP rb02,
+            p_12 RADIOBUTTON GROUP rb02,
+            p_13 RADIOBUTTON GROUP rb02,
+            p_14 RADIOBUTTON GROUP rb02.
+
+SELECTION-SCREEN END OF BLOCK bl02.
+*--------------------------------------------------------------------*
+* Class - Examples Handler
+*--------------------------------------------------------------------*
+CLASS lcl_compare DEFINITION.
+
+  PUBLIC SECTION.
+    METHODS constructor IMPORTING comptype TYPE char5.
+    METHODS compare_command IMPORTING compnum TYPE char2.
+
+  PRIVATE SECTION.
+    TYPES: BEGIN OF ty_sbook,
+            carrid   TYPE sbook-carrid,
+            connid   TYPE sbook-connid,
+            fldate   TYPE sbook-fldate,
+            bookid   TYPE sbook-bookid,
+            passname TYPE sbook-passname,
+           END OF ty_sbook.
+
+    TYPES: BEGIN OF ty_sflight,
+            carrid TYPE sflight-carrid,
+            connid TYPE sflight-connid,
+           END OF ty_sflight.
+
+    DATA: v_test1 TYPE char1,
+          v_test2  TYPE char1.
+
+    DATA: t_sflight   TYPE TABLE OF ty_sflight,
+          t_sbook     TYPE TABLE OF ty_sbook,
+          t_sbook_aux TYPE TABLE OF ty_sbook,
+          lwa_sflight LIKE LINE OF t_sflight,
+          lwa_sbook   LIKE LINE OF t_sbook.
+
+    METHODS command_01 IMPORTING test1 TYPE char1 OPTIONAL
+                                 test2 TYPE char1 OPTIONAL.
+    METHODS command_02 IMPORTING test1 TYPE char1 OPTIONAL
+                                 test2 TYPE char1 OPTIONAL.
+    METHODS command_03 IMPORTING test1 TYPE char1 OPTIONAL
+                                 test2 TYPE char1 OPTIONAL.
+    METHODS command_04 IMPORTING test1 TYPE char1 OPTIONAL
+                                 test2 TYPE char1 OPTIONAL.
+    METHODS command_05 IMPORTING test1 TYPE char1 OPTIONAL
+                                 test2 TYPE char1 OPTIONAL.
+    METHODS command_06 IMPORTING test1 TYPE char1 OPTIONAL
+                                 test2 TYPE char1 OPTIONAL.
+    METHODS command_07 IMPORTING test1 TYPE char1 OPTIONAL
+                                 test2 TYPE char1 OPTIONAL.
+    METHODS command_08 IMPORTING test1 TYPE char1 OPTIONAL
+                                 test2 TYPE char1 OPTIONAL.
+    METHODS command_09 IMPORTING test1 TYPE char1 OPTIONAL
+                                 test2 TYPE char1 OPTIONAL.
+    METHODS command_10 IMPORTING test1 TYPE char1 OPTIONAL
+                                 test2 TYPE char1 OPTIONAL.
+    METHODS command_11 IMPORTING test1 TYPE char1 OPTIONAL
+                                 test2 TYPE char1 OPTIONAL.
+    METHODS command_12 IMPORTING test1 TYPE char1 OPTIONAL
+                                 test2 TYPE char1 OPTIONAL.
+    METHODS command_13 IMPORTING test1 TYPE char1 OPTIONAL
+                                 test2 TYPE char1 OPTIONAL.
+    METHODS command_14 IMPORTING test1 TYPE char1 OPTIONAL
+                                 test2 TYPE char1 OPTIONAL.
+
+ENDCLASS.                    &quot;lcl_compare DEFINITION
+
+*----------------------------------------------------------------------*
+*       CLASS lcl_compare IMPLEMENTATION
+*----------------------------------------------------------------------*
+*
+*----------------------------------------------------------------------*
+CLASS lcl_compare IMPLEMENTATION.
+
+  METHOD constructor.
+
+    CASE comptype.
+      WHEN &apos;TEST1&apos;.
+        me-&gt;v_test1 = &apos;X&apos;.
+      WHEN &apos;TEST2&apos;.
+        me-&gt;v_test2  = &apos;X&apos;.
+      WHEN &apos;BOTH&apos;.
+        me-&gt;v_test1 = &apos;X&apos;.
+        me-&gt;v_test2  = &apos;X&apos;.
+    ENDCASE.
+
+  ENDMETHOD.                    &quot;constructor
+
+  METHOD compare_command.
+
+    DATA: l_methname TYPE string.
+
+    DATA: l_before TYPE timestampl,
+          l_after  TYPE timestampl,
+          l_result TYPE timestampl.
+
+    CONCATENATE &apos;COMMAND_&apos; compnum INTO l_methname.
+
+    IF me-&gt;v_test1 = &apos;X&apos;.
+      SKIP 1.
+      GET TIME STAMP FIELD l_before.
+      CALL METHOD me-&gt;(l_methname)
+        EXPORTING
+          test1 = &apos;X&apos;.
+      GET TIME STAMP FIELD l_after.
+      l_result = l_after - l_before.
+      WRITE: &apos;Test 1 Duration: &apos; COLOR COL_GROUP,
+             50 l_result.
+      SKIP 1.
+    ENDIF.
+
+    CLEAR: l_result, l_after, l_before.
+
+    IF me-&gt;v_test2 = &apos;X&apos;.
+      GET TIME STAMP FIELD l_before.
+      CALL METHOD me-&gt;(l_methname)
+        EXPORTING
+          test2 = &apos;X&apos;.
+      GET TIME STAMP FIELD l_after.
+      l_result = l_after - l_before.
+      WRITE: &apos;Test 2 Duration: &apos; COLOR COL_POSITIVE,
+             50 l_result.
+    ENDIF.
+
+  ENDMETHOD.                    &quot;compare_command
+
+  METHOD command_01.
+*--------------------------------------------------------------------*
+*  Select..EndSelect vs. Array Fetch
+*--------------------------------------------------------------------*
+    CASE &apos;X&apos;.
+
+*     SELECT...ENDSELECT
+      WHEN test1.
+
+        SELECT carrid
+               connid
+               fldate
+               bookid
+          FROM sbook
+          UP TO 30000 ROWS
+          INTO lwa_sbook.
+          APPEND lwa_sbook TO t_sbook.
+        ENDSELECT.
+
+
+*     ARRAY FETCH
+      WHEN test2.
+
+        SELECT carrid
+               connid
+               fldate
+               bookid
+          FROM sbook
+          INTO TABLE t_sbook
+          UP TO 30000 ROWS.
+
+    ENDCASE.
+
+  ENDMETHOD.                                                &quot;command_01
+
+  METHOD command_02.
+*--------------------------------------------------------------------*
+*  RANGEs - CAUTION!
+*--------------------------------------------------------------------*
+    DATA: rg_carrid TYPE RANGE OF sbook-carrid,
+          lwa_carrid LIKE LINE OF rg_carrid.
+
+    CASE &apos;X&apos;.
+
+*     Not Equal! Caution!
+      WHEN test1.
+
+        lwa_carrid-low    = &apos;JP&apos;.
+        lwa_carrid-option = &apos;NE&apos;.
+        lwa_carrid-sign   = &apos;I&apos;.
+        APPEND lwa_carrid TO rg_carrid.
+
+*     Equal - OK
+      WHEN test2.
+
+        lwa_carrid-low    = &apos;JP&apos;.
+        lwa_carrid-option = &apos;EQ&apos;.
+        lwa_carrid-sign   = &apos;I&apos;.
+        APPEND lwa_carrid TO rg_carrid.
+
+    ENDCASE.
+
+    SELECT carrid
+           connid
+           fldate
+           bookid
+      FROM sbook
+      INTO TABLE t_sbook
+      UP TO 50000 ROWS
+       WHERE carrid IN rg_carrid.
+
+  ENDMETHOD.                                                &quot;command_02
+
+  METHOD command_03.
+*--------------------------------------------------------------------*
+*  FOR ALL ENTRIES vs. INNER JOIN
+*--------------------------------------------------------------------*
+    CASE &apos;X&apos;.
+
+*     FOR ALL ENTRIES
+      WHEN test1.
+
+        SELECT carrid
+               connid
+          FROM sflight
+          INTO TABLE t_sflight
+          WHERE carrid = &apos;AA&apos;.
+
+        DELETE ADJACENT DUPLICATES FROM t_sflight
+                              COMPARING carrid connid.
+
+        SELECT carrid
+               connid
+               fldate
+               bookid
+          FROM sbook
+          INTO TABLE t_sbook
+          UP TO 10000 ROWS
+          FOR ALL ENTRIES IN t_sflight
+            WHERE carrid = t_sflight-carrid
+              AND connid = t_sflight-connid.
+
+*     INNER JOIN
+      WHEN test2.
+
+        SELECT a~carrid
+               a~connid
+               b~fldate
+               b~bookid
+         FROM sflight AS a INNER JOIN sbook AS b
+         ON  a~carrid = b~carrid AND
+             a~connid = b~connid
+         INTO TABLE t_sbook
+         UP TO 10000 ROWS
+           WHERE a~carrid = &apos;AA&apos;.
+
+
+    ENDCASE.
+
+  ENDMETHOD.                                                &quot;command_03
+
+  METHOD command_04.
+*--------------------------------------------------------------------*
+*  READ TABLE WITHOUT BINARY SEARCH
+*--------------------------------------------------------------------*
+    SELECT carrid
+           connid
+      FROM sflight
+      INTO TABLE t_sflight
+      WHERE carrid = &apos;AA&apos;.
+
+    SELECT carrid
+           connid
+           fldate
+           bookid
+      FROM sbook
+      INTO TABLE t_sbook
+      UP TO 500000 ROWS
+        WHERE carrid = &apos;AA&apos;.
+
+    CASE &apos;X&apos;.
+
+*     READ TABLE
+      WHEN test1.
+        LOOP AT t_sbook INTO lwa_sbook.
+          READ TABLE t_sflight INTO lwa_sflight WITH KEY
+            carrid = lwa_sbook-carrid
+            connid = lwa_sbook-connid.
+        ENDLOOP.
+
+*     READ TABLE BINARY SEARCH
+      WHEN test2.
+*       Do not forget to SORT the table before BINARY SEARCH
+        LOOP AT t_sbook INTO lwa_sbook.
+          READ TABLE t_sflight INTO lwa_sflight WITH KEY
+            carrid = lwa_sbook-carrid
+            connid = lwa_sbook-connid
+          BINARY SEARCH.
+        ENDLOOP.
+    ENDCASE.
+
+  ENDMETHOD.                                                &quot;command_04
+
+  METHOD command_05.
+*--------------------------------------------------------------------*
+*  Select inside LOOP Statement
+*--------------------------------------------------------------------*
+    SELECT carrid
+           connid
+           fldate
+           bookid
+      FROM sbook
+      INTO TABLE t_sbook
+      UP TO 200000 ROWS
+        WHERE carrid = &apos;AA&apos;.
+
+    CASE &apos;X&apos;.
+
+*     SELECT inside LOOPs
+      WHEN test1.
+
+        LOOP AT t_sbook INTO lwa_sbook.
+          SELECT SINGLE carrid
+                        connid
+                   FROM sflight
+                   INTO lwa_sflight
+              WHERE carrid = lwa_sbook-carrid
+                AND connid = lwa_sbook-connid.
+
+        ENDLOOP.
+
+*     SELECT without LOOPs
+      WHEN test2.
+
+        t_sbook_aux[] = t_sbook[].
+        SORT t_sbook_aux BY carrid connid.
+        DELETE ADJACENT DUPLICATES FROM t_sbook_aux
+                              COMPARING carrid
+                                        connid.
+
+        SELECT carrid
+               connid
+          FROM sflight
+        INTO TABLE t_sflight
+          FOR ALL ENTRIES IN t_sbook_aux
+          WHERE carrid = t_sbook_aux-carrid
+            AND connid = t_sbook_aux-connid.
+
+        LOOP AT t_sbook INTO lwa_sbook.
+          READ TABLE t_sflight INTO lwa_sflight WITH KEY
+            carrid = lwa_sbook-carrid
+            connid = lwa_sbook-connid
+          BINARY SEARCH.
+        ENDLOOP.
+
+    ENDCASE.
+
+  ENDMETHOD.                                                &quot;command_05
+
+  METHOD command_06.
+*--------------------------------------------------------------------*
+*  Massive Update to DB Tables
+*  The same concept can be applied to INSERT, DELETE and UPDATE
+*--------------------------------------------------------------------*
+
+    DATA: t_sbook TYPE TABLE OF sbook,
+          lwa_sbook LIKE LINE OF t_sbook.
+
+    SELECT *
+      FROM sbook
+      INTO TABLE t_sbook
+      UP TO 100000 ROWS
+        WHERE carrid = &apos;AA&apos;.
+
+*   MODIFY inside LOOPs
+    CASE &apos;X&apos;.
+      WHEN test1.
+        LOOP AT t_sbook INTO lwa_sbook.
+          MODIFY sbook FROM lwa_sbook.
+        ENDLOOP.
+
+*     MODIFY From Table
+      WHEN test2.
+        MODIFY sbook FROM TABLE t_sbook.
+
+    ENDCASE.
+
+  ENDMETHOD.                                                &quot;command_06
+
+  METHOD command_07.
+*--------------------------------------------------------------------*
+*  SELECT INTO CORRESPODING FIELDS
+*--------------------------------------------------------------------*
+    CASE &apos;X&apos;.
+
+*     SELECT INTO CORRESPONDING FIELDS
+      WHEN test1.
+        SELECT *
+          FROM sbook
+          INTO CORRESPONDING FIELDS OF TABLE t_sbook
+       UP TO 100000 ROWS.
+
+*     SELECT ARRAY FETCH
+      WHEN test2.
+        SELECT carrid
+               connid
+               fldate
+               bookid
+          FROM sbook
+          INTO TABLE t_sbook
+           UP TO 100000 ROWS.
+
+    ENDCASE.
+
+  ENDMETHOD.                                                &quot;command_07
+
+  METHOD command_08.
+*--------------------------------------------------------------------*
+*  LOOP WHERE vs. LOOP with BINARY SEARCH
+*--------------------------------------------------------------------*
+    SELECT carrid
+           connid
+           fldate
+           bookid
+      FROM sbook
+      INTO TABLE t_sbook
+      UP TO 100000 ROWS.
+
+    CASE &apos;X&apos;.
+
+*     LOOP WHERE
+      WHEN test1.
+        LOOP AT t_sbook INTO lwa_sbook WHERE carrid = &apos;AA&apos;.
+        ENDLOOP.
+
+*     LOOP BINARY SEARCH
+      WHEN test2.
+        SORT t_sbook BY carrid.
+        READ TABLE t_sbook INTO lwa_sbook WITH KEY
+          carrid = &apos;AA&apos;
+        BINARY SEARCH.
+
+        LOOP AT t_sbook INTO lwa_sbook FROM sy-tabix.
+          IF lwa_sbook-carrid &lt;&gt; &apos;AA&apos;.
+            EXIT.
+          ENDIF.
+        ENDLOOP.
+
+    ENDCASE.
+
+  ENDMETHOD.                                                &quot;command_08
+
+  METHOD command_09.
+*--------------------------------------------------------------------*
+*  MOVE CORRESPONDING
+*--------------------------------------------------------------------*
+
+    DATA: t_sbook   TYPE TABLE OF sbook,
+          lwa_sbook TYPE sbook.
+
+    SELECT *
+      FROM sbook
+      INTO TABLE t_sbook
+      UP TO 200000 ROWS.
+
+*   MOVE CORRESPODING
+    CASE &apos;X&apos;.
+      WHEN test1.
+
+        LOOP AT t_sbook INTO lwa_sbook.
+          MOVE-CORRESPONDING lwa_sbook TO lwa_sflight.
+        ENDLOOP.
+
+*     MOVE SPECIFYING FIELDS
+      WHEN test2.
+
+        LOOP AT t_sbook INTO lwa_sbook.
+          lwa_sflight-carrid = lwa_sbook-carrid.
+          lwa_sflight-connid = lwa_sbook-connid.
+        ENDLOOP.
+    ENDCASE.
+
+
+  ENDMETHOD.                                                &quot;command_09
+
+  METHOD command_10.
+*--------------------------------------------------------------------*
+*  INDEX EXAMPLES
+*--------------------------------------------------------------------*
+
+    DATA: rg_buspart TYPE RANGE OF s_buspanum,
+          lwa_buspart LIKE LINE OF rg_buspart.
+
+    lwa_buspart-sign   = &apos;I&apos;.
+    lwa_buspart-option = &apos;EQ&apos;.
+    lwa_buspart-low    = &apos;00003640&apos;.
+    APPEND lwa_buspart TO rg_buspart.
+
+    CASE &apos;X&apos;.
+
+*     INDEX USAGE EXAMPLE
+      WHEN test1.
+
+        SELECT carrid
+               connid
+               fldate
+               bookid
+          FROM sbook
+          INTO TABLE t_sbook
+           UP TO 200000 ROWS
+            WHERE agencynum IN rg_buspart.
+
+*     ANOTHER INDEX USAGE EXAMPLE
+      WHEN test2.
+
+        SELECT carrid
+               connid
+               fldate
+               bookid
+          FROM sbook
+          INTO TABLE t_sbook
+           UP TO 200000 ROWS
+            WHERE customid IN rg_buspart.
+
+    ENDCASE.
+
+  ENDMETHOD.                                                &quot;command_10
+
+  METHOD command_11.
+
+*--------------------------------------------------------------------*
+*  INNER JOIN PARTIAL KEY vs INNER JOIN FULL PRIMARY KEY
+*--------------------------------------------------------------------*
+
+    CASE &apos;X&apos;.
+
+*     INNER JOIN PARTIAL KEY
+      WHEN test1.
+
+        SELECT a~carrid
+               a~connid
+               b~fldate
+               b~bookid
+         FROM sflight AS a INNER JOIN sbook AS b
+         ON  a~carrid = b~carrid&quot; AND
+*             a~connid = b~connid
+         INTO TABLE t_sbook
+         UP TO 100000 ROWS
+           WHERE a~carrid = &apos;AA&apos;.
+
+*     INNER JOIN FULL PRIMARY KEY
+      WHEN test2.
+
+        SELECT a~carrid
+               a~connid
+               b~fldate
+               b~bookid
+         FROM sflight AS a INNER JOIN sbook AS b
+         ON  a~carrid = b~carrid AND
+             a~connid = b~connid
+         INTO TABLE t_sbook
+         UP TO 100000 ROWS
+           WHERE a~carrid = &apos;AA&apos;.
+
+
+
+    ENDCASE.
+
+  ENDMETHOD.                                                &quot;command_11
+
+  METHOD command_12.
+
+*--------------------------------------------------------------------*
+*  LOOP ASSIGNING
+*--------------------------------------------------------------------*
+
+    DATA: lwa_sbook LIKE LINE OF t_sbook.
+
+    FIELD-SYMBOLS: &lt;fs_sbook&gt; LIKE LINE OF t_sbook.
+
+    SELECT a~carrid
+           a~connid
+           b~fldate
+           b~bookid
+     FROM sflight AS a INNER JOIN sbook AS b
+     ON  a~carrid = b~carrid AND
+         a~connid = b~connid
+     INTO TABLE t_sbook
+     UP TO 200000 ROWS
+       WHERE a~carrid = &apos;AA&apos;.
+
+    CASE &apos;X&apos;.
+
+*     TEST 1
+      WHEN test1.
+
+        LOOP AT t_sbook INTO lwa_sbook.
+          lwa_sbook-carrid = &apos;BB&apos;.
+          MODIFY t_sbook FROM lwa_sbook INDEX sy-tabix.
+        ENDLOOP.
+
+*     TEST 2
+      WHEN test2.
+
+        LOOP AT t_sbook ASSIGNING &lt;fs_sbook&gt;.
+          &lt;fs_sbook&gt;-carrid = &apos;BB&apos;.
+        ENDLOOP.
+
+    ENDCASE.
+
+  ENDMETHOD.                                                &quot;command_12
+
+  METHOD command_13.
+*--------------------------------------------------------------------*
+*  SubQuery
+*--------------------------------------------------------------------*
+CASE &apos;X&apos;.
+
+*     TEST 1
+      WHEN test1.
+
+        SELECT carrid
+               connid
+          FROM sflight
+          INTO TABLE t_sflight
+          WHERE carrid = &apos;AA&apos;.
+
+        DELETE ADJACENT DUPLICATES FROM t_sflight
+                              COMPARING carrid connid.
+
+        SELECT carrid
+               connid
+               fldate
+               bookid
+          FROM sbook
+          INTO TABLE t_sbook
+          UP TO 10000 ROWS
+          FOR ALL ENTRIES IN t_sflight
+            WHERE carrid = t_sflight-carrid
+              AND connid = t_sflight-connid.
+
+*     TEST 2
+      WHEN test2.
+
+        SELECT carrid
+               connid
+               fldate
+               bookid
+         FROM sbook
+          INTO TABLE t_sbook
+          UP TO 10000 ROWS
+          WHERE EXISTS ( SELECT *
+                          FROM sflight
+                          WHERE carrid = &apos;AA&apos;
+                            AND connid = sbook~connid ).
+    ENDCASE.
+
+
+  ENDMETHOD.                                                &quot;command_13
+
+ METHOD command_14.
+*--------------------------------------------------------------------*
+*  New Test
+*--------------------------------------------------------------------*
+CASE &apos;X&apos;.
+
+*     TEST 1
+      WHEN test1.
+
+
+*     TEST 2
+      WHEN test2.
+
+    ENDCASE.
+
+
+  ENDMETHOD.                                                &quot;command_14
+
+ENDCLASS.                    &quot;lcl_compare IMPLEMENTATION
+
+DATA: o_comp TYPE REF TO lcl_compare.
+DATA: v_comm TYPE char2.
+
+*--------------------------------------------------------------------*
+* Event INITIALIZATION
+*--------------------------------------------------------------------*
+INITIALIZATION.
+
+  PERFORM f_create_texts.
+
+*&amp;---------------------------------------------------------------------*
+*&amp;      Form  F_CREATE_TEXTS
+*&amp;---------------------------------------------------------------------*
+FORM f_create_texts .
+  %_p_both_%_app_%-text  = &apos;Run Both Examples&apos;.
+  %_p_test1_%_app_%-text = &apos;Run Test 1&apos;.
+  %_p_test2_%_app_%-text = &apos;Run Test 2&apos;.
+  %_p_01_%_app_%-text    = &apos;01: SELECT... ENDSELECT&apos;.
+  %_p_02_%_app_%-text    = &apos;02: RANGEs&apos;.
+  %_p_03_%_app_%-text    = &apos;03: F.A.E. vs INNER JOIN&apos;.
+  %_p_04_%_app_%-text    = &apos;04: READ TABLE Binary Search&apos;.
+  %_p_05_%_app_%-text    = &apos;05: SELECT inside LOOPs&apos;.
+  %_p_06_%_app_%-text    = &apos;06: Massive Update to DB  &apos;.
+  %_p_07_%_app_%-text    = &apos;07: SELECT Into Corresponding F.&apos;.
+  %_p_08_%_app_%-text    = &apos;08: LOOP WHERE vs BINARY LOOP&apos;.
+  %_p_09_%_app_%-text    = &apos;09: MOVE-CORRESPONDING&apos;.
+  %_p_10_%_app_%-text    = &apos;10: Usage of Indexes&apos;.
+  %_p_11_%_app_%-text    = &apos;11: Inner Join Full vs Partial&apos;.
+  %_p_12_%_app_%-text    = &apos;12: Loop Assigning&apos;.
+  %_p_13_%_app_%-text    = &apos;13: Subquery&apos;.
+  %_p_14_%_app_%-text    = &apos;14: Place your test HERE!&apos;.
+ENDFORM.                    &quot; F_CREATE_TEXTS
+
+*--------------------------------------------------------------------*
+* Event Start-Of-Selection
+*--------------------------------------------------------------------*
+START-OF-SELECTION.
+
+  CASE &apos;X&apos;.
+    WHEN p_test1.
+      CREATE OBJECT o_comp
+        EXPORTING
+          comptype = &apos;TEST1&apos;.
+    WHEN p_test2.
+      CREATE OBJECT o_comp
+        EXPORTING
+          comptype = &apos;TEST2&apos;.
+    WHEN p_both.
+      CREATE OBJECT o_comp
+        EXPORTING
+          comptype = &apos;BOTH&apos;.
+  ENDCASE.
+
+  CASE &apos;X&apos;.
+    WHEN p_01.
+      v_comm = &apos;01&apos;.
+    WHEN p_02.
+      v_comm = &apos;02&apos;.
+    WHEN p_03.
+      v_comm = &apos;03&apos;.
+    WHEN p_04.
+      v_comm = &apos;04&apos;.
+    WHEN p_05.
+      v_comm = &apos;05&apos;.
+    WHEN p_06.
+      v_comm = &apos;06&apos;.
+    WHEN p_07.
+      v_comm = &apos;07&apos;.
+    WHEN p_08.
+      v_comm = &apos;08&apos;.
+    WHEN p_09.
+      v_comm = &apos;09&apos;.
+    WHEN p_10.
+      v_comm = &apos;10&apos;.
+    WHEN p_11.
+      v_comm = &apos;11&apos;.
+    WHEN p_12.
+      v_comm = &apos;12&apos;.
+    WHEN p_13.
+      v_comm = &apos;13&apos;.
+    WHEN p_14.
+      v_comm = &apos;14&apos;.
+  ENDCASE.
+
+  o_comp-&gt;compare_command( v_comm ).
+*----------------------------------------------------------------------*
+*                          === DISCLAIMER ===                          *
+*----------------------------------------------------------------------*
+* This code is made only for study and reference purposes. It was not  *
+* copied from any running program and it does not make references      *
+* to any functional requirement. All code here was created based on    *
+* the authors experience and creativity! Enjoy!                        *
+*----------------------------------------------------------------------*</source>
+ </PROG>
+</nugget>
