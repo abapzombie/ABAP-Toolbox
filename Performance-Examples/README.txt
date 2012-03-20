@@ -39,6 +39,6 @@ If you want to create your own comparison, do the following:
 
 ------------------------------------------------------------
 
-If you find any bugs or have any suggestion, don't hesitated to comment/push request/create bugs.
+If you find any bugs or have any suggestion, don't hesitated to comment/pull request/create bugs.
 
 Enjoy!

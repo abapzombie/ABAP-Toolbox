@@ -24,7 +24,7 @@ I've seen many ABAP developers with tons of .txt files that have custom developm
 -         Can I Contribute?           -
 ---------------------------------------
 
-Of course you can! You can either do a push request using Github, or send me the .nugg file on my ABAP Website, http://abapzombie.com/ . Also send me a README file explaining what your code can do.
+Of course you can! You can either do a pull request using Github, or send me the .nugg file by mail, or even send me a comment through my ABAP Website: http://abapzombie.com/ . Also create the README file explaining what your code can do.
 
 
 ---------------------------------------
@@ -44,4 +44,4 @@ If you've never heard of SAPLink, learn to use it NOW. It can save you TONS of t
 
 Reach me at:
 mauriciorcruz@gmail.com
-@mrc_cruz
+http://twitter.com/mrc_cruz

@@ -28,6 +28,6 @@ You can add the parameters as you want for each BAPI Method, just remember to se
 
 ------------------------------------------------------------
 
-If you find any bugs or have any suggestion, don't hesitated to comment/push request/create bugs.
+If you find any bugs or have any suggestion, don't hesitated to comment/pull request/create bugs.
 
 Enjoy!
