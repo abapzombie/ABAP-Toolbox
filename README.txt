@@ -39,6 +39,12 @@ If you've never heard of SAPLink, learn to use it NOW. It can save you TONS of t
 
 
 ---------------------------------------
+- Why you're not using SAP's CodeEx?  - 
+---------------------------------------
+CodeEx uses SVN, and I find git better for Social Coding than SVN. 
+
+
+---------------------------------------
 -               Contact               - 
 ---------------------------------------
 
