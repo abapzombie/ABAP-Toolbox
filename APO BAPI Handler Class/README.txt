@@ -3,7 +3,7 @@ Made by Mauricio Cruz
 
 ------------------------------------------------------------
 
-Class to help with APO BAPIs. Currently the program covers basic data retrieving and dcument deletion. Consistent data accesses in APO is usually made by BAPIs that are in sync with APO's Live Cache. I was tired of making the same accesses again and again and again, so I code this out. 
+Class to help with APO BAPIs. Currently the program covers basic data retrieving and document deletion. Consistent data accesses in APO are usually made by BAPIs that are in sync with APO's Live Cache. I was tired of making the same accesses again and again and again, so I code this out. 
 
 ------------------------------------------------------------
 
