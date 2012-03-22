@@ -5,7 +5,7 @@ http://http://www.abapzombie.com/codigos-e-exemplos/abap-zombie-screen-examples-
 
 ------------------------------------------------------------
 
-Many selection-screen examples. Try this out before choosing to create a new Module-Pool: sometimes a report is all you want!
+Many selection-screen examples. Try this out before choosing to create a new Module-Pool: sometimes a report is all you need!
 ------------------------------------------------------------
 
 Examples List:
