@@ -1,0 +1,412 @@
+<?xml version="1.0" encoding="utf-16"?>
+<nugget name="NUGG_BDC_CLASS">
+ <INTF CLSNAME="ZIF_RETURN_LOG" VERSION="1" LANGU="P" DESCRIPT="Default Log" UUID="4F7171D31964083FE1008000AC1A132F" CATEGORY="00" EXPOSURE="2" STATE="1" RELEASE="0" AUTHOR="NKIMOTO" CREATEDON="20120327" CHANGEDON="00000000" CHGDANYON="00000000" UNICODE="X" R3RELEASE="701">
+  <types CLSNAME="ZIF_RETURN_LOG" CMPNAME="TY_LOG" VERSION="1" LANGU="P" EXPOSURE="2" STATE="1" EDITORDER="1 " AUTHOR="NKIMOTO" CREATEDON="20120327" CHANGEDBY="NKIMOTO" CHANGEDON="20120329" TYPTYPE="4" SRCROW1="7 " SRCCOLUMN1="4 " SRCROW2="12 " SRCCOLUMN2="24 " TYPESRC_LENG="193 " TYPESRC="BEGIN OF ty_log,
+
+               msgtyp TYPE bdc_mart,
+
+               text   TYPE string,
+
+               msgid  TYPE symsgid,
+
+               msgno  TYPE symsgno,
+
+            END OF ty_log
+
+"/>
+  <types CLSNAME="ZIF_RETURN_LOG" CMPNAME="TB_LOG" VERSION="1" LANGU="P" EXPOSURE="2" STATE="1" EDITORDER="2 " AUTHOR="NKIMOTO" CREATEDON="20120327" CHANGEDBY="NKIMOTO" CHANGEDON="20120329" TYPTYPE="4" SRCROW1="14 " SRCCOLUMN1="4 " SRCROW2="14 " SRCCOLUMN2="46 " TYPESRC_LENG="45 " TYPESRC="tb_log TYPE TABLE OF ty_log WITH KEY msgtyp
+
+"/>
+  <method CLSNAME="ZIF_RETURN_LOG" CMPNAME="GET_ALL_MESSAGES" VERSION="1" LANGU="P" DESCRIPT="Get ALL Messages Returned by the Process" EXPOSURE="2" STATE="1" EDITORDER="1 " DISPID="0 " AUTHOR="NKIMOTO" CREATEDON="20120327" CHANGEDBY="NKIMOTO" CHANGEDON="20120329" MTDTYPE="0" MTDDECLTYP="0" BCMTDCAT="00" BCMTDSYN="0">
+   <parameter CLSNAME="ZIF_RETURN_LOG" CMPNAME="GET_ALL_MESSAGES" SCONAME="T_LOG" VERSION="1" LANGU="P" CMPTYPE="1" MTDTYPE="0" EDITORDER="1 " DISPID="0 " AUTHOR="NKIMOTO" CREATEDON="20120327" CHANGEDBY="NKIMOTO" CHANGEDON="20120329" PARDECLTYP="3" PARPASSTYP="0" TYPTYPE="1" TYPE="TB_LOG"/>
+  </method>
+  <method CLSNAME="ZIF_RETURN_LOG" CMPNAME="GET_ERROR_MESSAGES" VERSION="1" LANGU="P" DESCRIPT="Get Type &apos;E&apos; Messages" EXPOSURE="2" STATE="1" EDITORDER="2 " DISPID="0 " AUTHOR="NKIMOTO" CREATEDON="20120327" CHANGEDBY="NKIMOTO" CHANGEDON="20120329" MTDTYPE="0" MTDDECLTYP="0" BCMTDCAT="00" BCMTDSYN="0">
+   <parameter CLSNAME="ZIF_RETURN_LOG" CMPNAME="GET_ERROR_MESSAGES" SCONAME="T_LOG" VERSION="1" LANGU="P" CMPTYPE="1" MTDTYPE="0" EDITORDER="1 " DISPID="0 " AUTHOR="NKIMOTO" CREATEDON="20120327" CHANGEDBY="NKIMOTO" CHANGEDON="20120329" PARDECLTYP="3" PARPASSTYP="0" TYPTYPE="1" TYPE="TB_LOG"/>
+  </method>
+  <method CLSNAME="ZIF_RETURN_LOG" CMPNAME="GET_SUCCESS_MESSAGES" VERSION="1" LANGU="P" DESCRIPT="Get  Type &apos;S&apos; Messages" EXPOSURE="2" STATE="1" EDITORDER="3 " DISPID="0 " AUTHOR="NKIMOTO" CREATEDON="20120327" CHANGEDBY="NKIMOTO" CHANGEDON="20120329" MTDTYPE="0" MTDDECLTYP="0" BCMTDCAT="00" BCMTDSYN="0">
+   <parameter CLSNAME="ZIF_RETURN_LOG" CMPNAME="GET_SUCCESS_MESSAGES" SCONAME="T_LOG" VERSION="1" LANGU="P" CMPTYPE="1" MTDTYPE="0" EDITORDER="1 " DISPID="0 " AUTHOR="NKIMOTO" CREATEDON="20120327" CHANGEDBY="NKIMOTO" CHANGEDON="20120329" PARDECLTYP="3" PARPASSTYP="0" TYPTYPE="1" TYPE="TB_LOG"/>
+  </method>
+ </INTF>
+ <CLAS CLSNAME="ZCL_BDC" VERSION="1" LANGU="P" DESCRIPT="Handle Call Transaction Life Cycle for APO" UUID="4F68D7B3379605ABE1008000AC1A132F" CATEGORY="00" EXPOSURE="2" STATE="1" RELEASE="0" AUTHOR="NKIMOTO" CREATEDON="20120322" CHANGEDON="00000000" CHGDANYON="00000000" CLSFINAL="X" CLSCCINCL="X" FIXPT="X" UNICODE="X" R3RELEASE="701" CLSBCCAT="00" DURATION_TYPE="0 " RISK_LEVEL="0 ">
+  <types CLSNAME="ZCL_BDC" CMPNAME="TB_BDCDATA" VERSION="1" LANGU="P" EXPOSURE="0" STATE="1" EDITORDER="1 " AUTHOR="NKIMOTO" CREATEDON="20120322" CHANGEDBY="NKIMOTO" CHANGEDON="20120327" TYPTYPE="4" SRCROW1="6 " SRCCOLUMN1="4 " SRCROW2="6 " SRCCOLUMN2="35 " R3RELEASE="701" TYPESRC_LENG="34 " TYPESRC="tb_bdcdata TYPE TABLE OF bdcdata
+"/>
+  <types CLSNAME="ZCL_BDC" CMPNAME="TY_LOG" VERSION="1" LANGU="P" EXPOSURE="2" STATE="1" EDITORDER="1 " AUTHOR="NKIMOTO" CREATEDON="20120322" CHANGEDBY="NKIMOTO" CHANGEDON="20120327" TYPTYPE="4" SRCROW1="13 " SRCCOLUMN1="4 " SRCROW2="16 " SRCCOLUMN2="24 " R3RELEASE="701" TYPESRC_LENG="119 " TYPESRC="BEGIN OF ty_log,
+               msgtyp TYPE bdc_mart,
+               text   TYPE string,
+            END OF ty_log
+"/>
+  <types CLSNAME="ZCL_BDC" CMPNAME="TB_LOG" VERSION="1" LANGU="P" EXPOSURE="2" STATE="1" EDITORDER="2 " AUTHOR="NKIMOTO" CREATEDON="20120322" CHANGEDBY="NKIMOTO" CHANGEDON="20120327" TYPTYPE="4" SRCROW1="18 " SRCCOLUMN1="4 " SRCROW2="18 " SRCCOLUMN2="46 " R3RELEASE="701" TYPESRC_LENG="45 " TYPESRC="tb_log TYPE TABLE OF ty_log WITH KEY msgtyp
+"/>
+  <implementing CLSNAME="ZCL_BDC" REFCLSNAME="ZIF_RETURN_LOG" VERSION="1" EXPOSURE="2" STATE="1" AUTHOR="NKIMOTO" CREATEDON="20120327" CHANGEDON="00000000" RELTYPE="1"/>
+  <publicSection>class ZCL_BDC definition
+  public
+  final
+  create public .
+
+*&quot;* public components of class ZCL_BDC
+*&quot;* do not include other source files here!!!
+public section.
+
+  interfaces ZIF_RETURN_LOG .
+
+  types:
+    BEGIN OF ty_log,
+               msgtyp TYPE bdc_mart,
+               text   TYPE string,
+            END OF ty_log .
+  types:
+    tb_log TYPE TABLE OF ty_log WITH KEY msgtyp .
+
+  methods CONSTRUCTOR
+    importing
+      !TRANSACTION type CHAR20
+      !DISMODE type CTU_MODE
+      !UPDMODE type CTU_UPDATE optional
+      !CATTMODE type CTU_CATT optional
+      !DEFSIZE type CTU_DEFSZE optional
+      !RACOMMIT type CTU_RAFC optional
+      !NOBINPT type CTU_NOBIM optional
+      !NOBIEND type CTU_NOBEN optional .
+  methods RUN .
+  methods ADD_FCOMM
+    importing
+      !FNAM type FNAM_____4
+      !FVAL type BDC_FVAL optional .
+  methods ADD_SCREEN
+    importing
+      !PROGRAM type BDC_PROG
+      !DYNPRO type BDC_DYNR
+      !DYNBEGIN type BDC_START default &apos;X&apos; .
+  methods ADD_OKCODE
+    importing
+      !FVAL type BDC_FVAL .
+  methods ADD_CURSOR
+    importing
+      !FVAL type BDC_FVAL .
+  methods ADD_SUBSCR
+    importing
+      !FVAL type BDC_FVAL .
+  methods ADD_ENTER .
+  methods ADD_PAGEDOWN .
+  methods ADD_RADIOBUTTON .
+  methods ADD_ACCEPT .
+  methods ADD_EXECUTE .
+  methods ADD_SAME_SCREEN .
+  methods ADD_MAIN_SCREEN
+    importing
+      !PROGRAM type BDC_PROG optional
+      !DYNPRO type BDC_DYNR optional
+      !DYNBEGIN type BDC_START default &apos;X&apos; .
+  methods ADD_SAVE .</publicSection>
+  <protectedSection>*&quot;* protected components of class ZCL_BDC
+*&quot;* do not include other source files here!!!
+protected section.</protectedSection>
+  <privateSection>*&quot;* private components of class ZCL_BDC
+*&quot;* do not include other source files here!!!
+private section.
+
+  types:
+    tb_bdcdata TYPE TABLE OF bdcdata .
+
+  data T_BDCDATA type WDKBDCDATA_TTY .
+  data T_MESSAGE type WDKMSG_TTY .
+  data V_TRANSACTION type CHAR20 .
+  data WA_CTU_PARAMS type CTU_PARAMS .
+  data WA_LAST_SCREEN type BDCDATA .
+  data WA_BDC type BDCDATA .
+  data WA_MAIN_SCREEN type BDCDATA .</privateSection>
+  <localImplementation>*&quot;* local class implementation for public class
+*&quot;* use this source file for the implementation part of
+*&quot;* local helper classes</localImplementation>
+  <localTypes>*&quot;* use this source file for any type declarations (class
+*&quot;* definitions, interfaces or data types) you need for method
+*&quot;* implementation or private method&apos;s signature</localTypes>
+  <localMacros>*&quot;* use this source file for any macro definitions you need
+*&quot;* in the implementation part of the class</localMacros>
+  <attribute CLSNAME="ZCL_BDC" CMPNAME="T_BDCDATA" VERSION="1" LANGU="P" DESCRIPT="Table of BDCDATA" EXPOSURE="0" STATE="1" EDITORDER="1 " AUTHOR="NKIMOTO" CREATEDON="20120322" CHANGEDON="00000000" ATTDECLTYP="0" ATTEXPVIRT="0" TYPTYPE="1" TYPE="WDKBDCDATA_TTY" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " R3RELEASE="701" TYPESRC_LENG="0 "/>
+  <attribute CLSNAME="ZCL_BDC" CMPNAME="T_MESSAGE" VERSION="1" LANGU="P" DESCRIPT="Messages from Call Transaction" EXPOSURE="0" STATE="1" EDITORDER="2 " AUTHOR="NKIMOTO" CREATEDON="20120322" CHANGEDON="00000000" ATTDECLTYP="0" ATTEXPVIRT="0" TYPTYPE="1" TYPE="WDKMSG_TTY" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " R3RELEASE="701" TYPESRC_LENG="0 "/>
+  <attribute CLSNAME="ZCL_BDC" CMPNAME="V_TRANSACTION" VERSION="1" LANGU="P" DESCRIPT="Campo de caracteres do comprimento 10" EXPOSURE="0" STATE="1" EDITORDER="3 " AUTHOR="NKIMOTO" CREATEDON="20120322" CHANGEDON="00000000" ATTDECLTYP="0" ATTEXPVIRT="0" TYPTYPE="1" TYPE="CHAR20" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " R3RELEASE="701" TYPESRC_LENG="0 "/>
+  <attribute CLSNAME="ZCL_BDC" CMPNAME="WA_BDC" VERSION="1" LANGU="P" DESCRIPT="Batch input nova estrutura do campo de tabela" EXPOSURE="0" STATE="1" EDITORDER="6 " AUTHOR="NKIMOTO" CREATEDON="20120322" CHANGEDON="00000000" ATTDECLTYP="0" ATTEXPVIRT="0" TYPTYPE="1" TYPE="BDCDATA" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " R3RELEASE="701" TYPESRC_LENG="0 "/>
+  <attribute CLSNAME="ZCL_BDC" CMPNAME="WA_CTU_PARAMS" VERSION="1" LANGU="P" DESCRIPT="Barra parâmetros p/tempo execução de Call Transaction using" EXPOSURE="0" STATE="1" EDITORDER="4 " AUTHOR="NKIMOTO" CREATEDON="20120322" CHANGEDON="00000000" ATTDECLTYP="0" ATTEXPVIRT="0" TYPTYPE="1" TYPE="CTU_PARAMS" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " R3RELEASE="701" TYPESRC_LENG="0 "/>
+  <attribute CLSNAME="ZCL_BDC" CMPNAME="WA_LAST_SCREEN" VERSION="1" LANGU="P" DESCRIPT="Batch input nova estrutura do campo de tabela" EXPOSURE="0" STATE="1" EDITORDER="5 " AUTHOR="NKIMOTO" CREATEDON="20120322" CHANGEDON="00000000" ATTDECLTYP="0" ATTEXPVIRT="0" TYPTYPE="1" TYPE="BDCDATA" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " R3RELEASE="701" TYPESRC_LENG="0 "/>
+  <attribute CLSNAME="ZCL_BDC" CMPNAME="WA_MAIN_SCREEN" VERSION="1" LANGU="P" DESCRIPT="Batch input nova estrutura do campo de tabela" EXPOSURE="0" STATE="1" EDITORDER="7 " AUTHOR="NKIMOTO" CREATEDON="20120322" CHANGEDON="00000000" ATTDECLTYP="0" ATTEXPVIRT="0" TYPTYPE="1" TYPE="BDCDATA" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " R3RELEASE="701" TYPESRC_LENG="0 "/>
+  <interfaceMethod CLSNAME="ZCL_BDC" CPDNAME="ZIF_RETURN_LOG~GET_ALL_MESSAGES">
+   <source>method ZIF_RETURN_LOG~GET_ALL_MESSAGES.
+
+
+  DATA: lwa_message LIKE LINE OF me-&gt;t_message,
+        lwa_log     LIKE LINE OF t_log.
+
+  LOOP AT me-&gt;t_message INTO lwa_message.
+
+    MESSAGE ID lwa_message-msgid
+          TYPE lwa_message-msgtyp
+        NUMBER lwa_message-msgnr
+          INTO lwa_log-text
+          WITH lwa_message-msgv1
+               lwa_message-msgv2
+               lwa_message-msgv3
+               lwa_message-msgv4.
+
+    lwa_log-msgtyp = lwa_message-msgtyp.
+    APPEND lwa_log TO t_log.
+    CLEAR  lwa_log.
+
+  ENDLOOP.
+
+endmethod.</source>
+  </interfaceMethod>
+  <interfaceMethod CLSNAME="ZCL_BDC" CPDNAME="ZIF_RETURN_LOG~GET_ERROR_MESSAGES">
+   <source>method ZIF_RETURN_LOG~GET_ERROR_MESSAGES.
+
+  DATA: lwa_message LIKE LINE OF me-&gt;t_message,
+        lwa_log     LIKE LINE OF t_log.
+
+  LOOP AT me-&gt;t_message INTO lwa_message WHERE msgtyp = &apos;E&apos;.
+
+    MESSAGE ID lwa_message-msgid
+          TYPE lwa_message-msgtyp
+        NUMBER lwa_message-msgnr
+          INTO lwa_log-text
+          WITH lwa_message-msgv1
+               lwa_message-msgv2
+               lwa_message-msgv3
+               lwa_message-msgv4.
+
+    lwa_log-msgid  = lwa_message-msgid.
+    lwa_log-msgno  = lwa_message-msgnr.
+    lwa_log-msgtyp = lwa_message-msgtyp.
+    APPEND lwa_log TO t_log.
+    CLEAR  lwa_log.
+
+  ENDLOOP.
+
+
+endmethod.</source>
+  </interfaceMethod>
+  <interfaceMethod CLSNAME="ZCL_BDC" CPDNAME="ZIF_RETURN_LOG~GET_SUCCESS_MESSAGES">
+   <source>method ZIF_RETURN_LOG~GET_SUCCESS_MESSAGES.
+
+  DATA: lwa_message LIKE LINE OF me-&gt;t_message,
+        lwa_log     LIKE LINE OF t_log.
+
+  LOOP AT me-&gt;t_message INTO lwa_message WHERE msgtyp = &apos;S&apos;.
+
+    MESSAGE ID lwa_message-msgid
+          TYPE lwa_message-msgtyp
+        NUMBER lwa_message-msgnr
+          INTO lwa_log-text
+          WITH lwa_message-msgv1
+               lwa_message-msgv2
+               lwa_message-msgv3
+               lwa_message-msgv4.
+
+    lwa_log-msgtyp = lwa_message-msgtyp.
+    APPEND lwa_log TO t_log.
+    CLEAR  lwa_log.
+
+  ENDLOOP.
+
+
+endmethod.</source>
+  </interfaceMethod>
+  <method CLSNAME="ZCL_BDC" CMPNAME="ADD_ACCEPT" VERSION="1" LANGU="P" DESCRIPT="OKCODE - Add ACCEPT to BDC Table (Range Intervals Screen)" EXPOSURE="2" STATE="1" EDITORDER="11 " DISPID="0 " AUTHOR="NKIMOTO" CREATEDON="20120322" CHANGEDBY="NKIMOTO" CHANGEDON="20120327" MTDTYPE="0" MTDDECLTYP="0" R3RELEASE="701" BCMTDCAT="00" BCMTDSYN="0">
+   <source>method ADD_ACCEPT.
+
+  me-&gt;wa_bdc-fnam     = &apos;BDC_OKCODE&apos;.
+  me-&gt;wa_bdc-fval     = &apos;=ACPT&apos;.
+
+  APPEND me-&gt;wa_bdc TO me-&gt;t_bdcdata.
+  CLEAR  me-&gt;wa_bdc.
+
+endmethod.</source>
+  </method>
+  <method CLSNAME="ZCL_BDC" CMPNAME="ADD_CURSOR" VERSION="1" LANGU="P" DESCRIPT="Add cursor position to BDC Table" EXPOSURE="2" STATE="1" EDITORDER="6 " DISPID="0 " AUTHOR="NKIMOTO" CREATEDON="20120322" CHANGEDBY="NKIMOTO" CHANGEDON="20120327" MTDTYPE="0" MTDDECLTYP="0" R3RELEASE="701" BCMTDCAT="00" BCMTDSYN="0">
+   <parameter CLSNAME="ZCL_BDC" CMPNAME="ADD_CURSOR" SCONAME="FVAL" VERSION="1" LANGU="P" DESCRIPT="Valor do campo BDC" CMPTYPE="1" MTDTYPE="0" EDITORDER="1 " DISPID="0 " AUTHOR="NKIMOTO" CREATEDON="20120322" CHANGEDON="00000000" PARDECLTYP="0" PARPASSTYP="1" TYPTYPE="1" TYPE="BDC_FVAL"/>
+   <source>method ADD_CURSOR.
+
+  me-&gt;wa_bdc-fnam     = &apos;BDC_CURSOR&apos;.
+  me-&gt;wa_bdc-fval     = fval.
+
+  APPEND me-&gt;wa_bdc TO me-&gt;t_bdcdata.
+  CLEAR  me-&gt;wa_bdc.
+
+endmethod.</source>
+  </method>
+  <method CLSNAME="ZCL_BDC" CMPNAME="ADD_ENTER" VERSION="1" LANGU="P" DESCRIPT="OKCODE - Add ENTER to BDC Table" EXPOSURE="2" STATE="1" EDITORDER="8 " DISPID="0 " AUTHOR="NKIMOTO" CREATEDON="20120322" CHANGEDBY="NKIMOTO" CHANGEDON="20120327" MTDTYPE="0" MTDDECLTYP="0" R3RELEASE="701" BCMTDCAT="00" BCMTDSYN="0">
+   <source>method ADD_ENTER.
+
+  me-&gt;wa_bdc-fnam     = &apos;BDC_OKCODE&apos;.
+  me-&gt;wa_bdc-fval     = &apos;/00&apos;.
+
+  APPEND me-&gt;wa_bdc TO me-&gt;t_bdcdata.
+  CLEAR  me-&gt;wa_bdc.
+
+endmethod.</source>
+  </method>
+  <method CLSNAME="ZCL_BDC" CMPNAME="ADD_EXECUTE" VERSION="1" LANGU="P" DESCRIPT="OKCODE - Add EXECUTE to BDC Table" EXPOSURE="2" STATE="1" EDITORDER="12 " DISPID="0 " AUTHOR="NKIMOTO" CREATEDON="20120322" CHANGEDBY="NKIMOTO" CHANGEDON="20120327" MTDTYPE="0" MTDDECLTYP="0" R3RELEASE="701" BCMTDCAT="00" BCMTDSYN="0">
+   <source>method ADD_EXECUTE.
+
+  me-&gt;wa_bdc-fnam     = &apos;BDC_OKCODE&apos;.
+  me-&gt;wa_bdc-fval     = &apos;=ONLI&apos;.
+
+  APPEND me-&gt;wa_bdc TO me-&gt;t_bdcdata.
+  CLEAR  me-&gt;wa_bdc.
+
+endmethod.</source>
+  </method>
+  <method CLSNAME="ZCL_BDC" CMPNAME="ADD_FCOMM" VERSION="1" LANGU="P" DESCRIPT="Add field/command codes to BDC Table" EXPOSURE="2" STATE="1" EDITORDER="3 " DISPID="0 " AUTHOR="NKIMOTO" CREATEDON="20120322" CHANGEDBY="NKIMOTO" CHANGEDON="20120327" MTDTYPE="0" MTDDECLTYP="0" R3RELEASE="701" BCMTDCAT="00" BCMTDSYN="0">
+   <parameter CLSNAME="ZCL_BDC" CMPNAME="ADD_FCOMM" SCONAME="FNAM" VERSION="1" LANGU="P" DESCRIPT="Nome do campo" CMPTYPE="1" MTDTYPE="0" EDITORDER="1 " DISPID="0 " AUTHOR="NKIMOTO" CREATEDON="20120322" CHANGEDON="00000000" PARDECLTYP="0" PARPASSTYP="1" TYPTYPE="1" TYPE="FNAM_____4"/>
+   <parameter CLSNAME="ZCL_BDC" CMPNAME="ADD_FCOMM" SCONAME="FVAL" VERSION="1" LANGU="P" DESCRIPT="Valor do campo BDC" CMPTYPE="1" MTDTYPE="0" EDITORDER="2 " DISPID="0 " AUTHOR="NKIMOTO" CREATEDON="20120322" CHANGEDON="00000000" PARDECLTYP="0" PARPASSTYP="1" TYPTYPE="1" TYPE="BDC_FVAL" PAROPTIONL="X"/>
+   <source>METHOD ADD_FCOMM.
+
+  me-&gt;wa_bdc-fnam     = fnam.
+  me-&gt;wa_bdc-fval     = fval.
+
+  APPEND me-&gt;wa_bdc TO me-&gt;t_bdcdata.
+  CLEAR  me-&gt;wa_bdc.
+
+ENDMETHOD.</source>
+  </method>
+  <method CLSNAME="ZCL_BDC" CMPNAME="ADD_MAIN_SCREEN" VERSION="1" LANGU="P" DESCRIPT="Add transaction main screen to BDC Table" EXPOSURE="2" STATE="1" EDITORDER="14 " DISPID="0 " AUTHOR="NKIMOTO" CREATEDON="20120322" CHANGEDBY="NKIMOTO" CHANGEDON="20120327" MTDTYPE="0" MTDDECLTYP="0" R3RELEASE="701" BCMTDCAT="00" BCMTDSYN="0">
+   <parameter CLSNAME="ZCL_BDC" CMPNAME="ADD_MAIN_SCREEN" SCONAME="PROGRAM" VERSION="1" LANGU="P" DESCRIPT="Pool de módulos BDC" CMPTYPE="1" MTDTYPE="0" EDITORDER="1 " DISPID="0 " AUTHOR="NKIMOTO" CREATEDON="20120322" CHANGEDON="00000000" PARDECLTYP="0" PARPASSTYP="1" TYPTYPE="1" TYPE="BDC_PROG" PAROPTIONL="X"/>
+   <parameter CLSNAME="ZCL_BDC" CMPNAME="ADD_MAIN_SCREEN" SCONAME="DYNPRO" VERSION="1" LANGU="P" DESCRIPT="NÚmero de tela BDC" CMPTYPE="1" MTDTYPE="0" EDITORDER="2 " DISPID="0 " AUTHOR="NKIMOTO" CREATEDON="20120322" CHANGEDON="00000000" PARDECLTYP="0" PARPASSTYP="1" TYPTYPE="1" TYPE="BDC_DYNR" PAROPTIONL="X"/>
+   <parameter CLSNAME="ZCL_BDC" CMPNAME="ADD_MAIN_SCREEN" SCONAME="DYNBEGIN" VERSION="1" LANGU="P" DESCRIPT="Início BDC de uma tela" CMPTYPE="1" MTDTYPE="0" EDITORDER="3 " DISPID="0 " AUTHOR="NKIMOTO" CREATEDON="20120322" CHANGEDON="00000000" PARDECLTYP="0" PARPASSTYP="1" TYPTYPE="1" TYPE="BDC_START" PARVALUE="&apos;X&apos;"/>
+   <source>METHOD add_main_screen.
+
+  IF program IS INITIAL.
+
+    APPEND me-&gt;wa_main_screen TO me-&gt;t_bdcdata.
+
+  ELSE.
+
+    me-&gt;wa_bdc-program  = program.
+    me-&gt;wa_bdc-dynpro   = dynpro.
+    me-&gt;wa_bdc-dynbegin = dynbegin.
+    me-&gt;wa_main_screen  = me-&gt;wa_bdc.
+    me-&gt;wa_last_screen  = me-&gt;wa_bdc.
+    APPEND me-&gt;wa_bdc TO me-&gt;t_bdcdata.
+    CLEAR  me-&gt;wa_bdc.
+
+  ENDIF.
+
+ENDMETHOD.</source>
+  </method>
+  <method CLSNAME="ZCL_BDC" CMPNAME="ADD_OKCODE" VERSION="1" LANGU="P" DESCRIPT="Add generic  &apos;OKCODE&apos; to BDC Table" EXPOSURE="2" STATE="1" EDITORDER="5 " DISPID="0 " AUTHOR="NKIMOTO" CREATEDON="20120322" CHANGEDBY="NKIMOTO" CHANGEDON="20120327" MTDTYPE="0" MTDDECLTYP="0" R3RELEASE="701" BCMTDCAT="00" BCMTDSYN="0">
+   <parameter CLSNAME="ZCL_BDC" CMPNAME="ADD_OKCODE" SCONAME="FVAL" VERSION="1" LANGU="P" DESCRIPT="Valor do campo BDC" CMPTYPE="1" MTDTYPE="0" EDITORDER="1 " DISPID="0 " AUTHOR="NKIMOTO" CREATEDON="20120322" CHANGEDON="00000000" PARDECLTYP="0" PARPASSTYP="1" TYPTYPE="1" TYPE="BDC_FVAL"/>
+   <source>method ADD_OKCODE.
+
+  me-&gt;wa_bdc-fnam     = &apos;BDC_OKCODE&apos;.
+  me-&gt;wa_bdc-fval     = fval.
+
+  APPEND me-&gt;wa_bdc TO me-&gt;t_bdcdata.
+  CLEAR  me-&gt;wa_bdc.
+
+endmethod.</source>
+  </method>
+  <method CLSNAME="ZCL_BDC" CMPNAME="ADD_PAGEDOWN" VERSION="1" LANGU="P" DESCRIPT="OKCODE - Add PAGEDOWN&apos; to BDC Table" EXPOSURE="2" STATE="1" EDITORDER="9 " DISPID="0 " AUTHOR="NKIMOTO" CREATEDON="20120322" CHANGEDBY="NKIMOTO" CHANGEDON="20120327" MTDTYPE="0" MTDDECLTYP="0" R3RELEASE="701" BCMTDCAT="00" BCMTDSYN="0">
+   <source>method ADD_PAGEDOWN.
+
+  me-&gt;wa_bdc-fnam     = &apos;BDC_OKCODE&apos;.
+  me-&gt;wa_bdc-fval     = &apos;=P+&apos;.
+
+  APPEND me-&gt;wa_bdc TO me-&gt;t_bdcdata.
+  CLEAR  me-&gt;wa_bdc.
+
+endmethod.</source>
+  </method>
+  <method CLSNAME="ZCL_BDC" CMPNAME="ADD_RADIOBUTTON" VERSION="1" LANGU="P" DESCRIPT="OKCODE - Add RADIOBUTTON Change Confirmation to BDC Table" EXPOSURE="2" STATE="1" EDITORDER="10 " DISPID="0 " AUTHOR="NKIMOTO" CREATEDON="20120322" CHANGEDBY="NKIMOTO" CHANGEDON="20120327" MTDTYPE="0" MTDDECLTYP="0" R3RELEASE="701" BCMTDCAT="00" BCMTDSYN="0">
+   <source>method ADD_RADIOBUTTON.
+
+  me-&gt;wa_bdc-fnam     = &apos;BDC_OKCODE&apos;.
+  me-&gt;wa_bdc-fval     = &apos;=RADIO&apos;.
+
+  APPEND me-&gt;wa_bdc TO me-&gt;t_bdcdata.
+  CLEAR  me-&gt;wa_bdc.
+
+endmethod.</source>
+  </method>
+  <method CLSNAME="ZCL_BDC" CMPNAME="ADD_SAME_SCREEN" VERSION="1" LANGU="P" DESCRIPT="Set same screen previously set be SET_SCREEN" EXPOSURE="2" STATE="1" EDITORDER="13 " DISPID="0 " AUTHOR="NKIMOTO" CREATEDON="20120322" CHANGEDBY="NKIMOTO" CHANGEDON="20120327" MTDTYPE="0" MTDDECLTYP="0" R3RELEASE="701" BCMTDCAT="00" BCMTDSYN="0">
+   <source>METHOD ADD_SAME_SCREEN.
+
+  APPEND me-&gt;wa_last_screen TO me-&gt;t_bdcdata.
+
+ENDMETHOD.</source>
+  </method>
+  <method CLSNAME="ZCL_BDC" CMPNAME="ADD_SAVE" VERSION="1" LANGU="P" DESCRIPT="OKCODE - Add SAVE to BDC Table" EXPOSURE="2" STATE="1" EDITORDER="15 " DISPID="0 " AUTHOR="NKIMOTO" CREATEDON="20120323" CHANGEDBY="NKIMOTO" CHANGEDON="20120327" MTDTYPE="0" MTDDECLTYP="0" R3RELEASE="701" BCMTDCAT="00" BCMTDSYN="0">
+   <source>method ADD_SAVE.
+
+  me-&gt;wa_bdc-fnam     = &apos;BDC_OKCODE&apos;.
+  me-&gt;wa_bdc-fval     = &apos;=SAVE&apos;.
+
+  APPEND me-&gt;wa_bdc TO me-&gt;t_bdcdata.
+  CLEAR  me-&gt;wa_bdc.
+
+endmethod.</source>
+  </method>
+  <method CLSNAME="ZCL_BDC" CMPNAME="ADD_SCREEN" VERSION="1" LANGU="P" DESCRIPT="Add screen data to BDC Table" EXPOSURE="2" STATE="1" EDITORDER="4 " DISPID="0 " AUTHOR="NKIMOTO" CREATEDON="20120322" CHANGEDBY="NKIMOTO" CHANGEDON="20120327" MTDTYPE="0" MTDDECLTYP="0" R3RELEASE="701" BCMTDCAT="00" BCMTDSYN="0">
+   <parameter CLSNAME="ZCL_BDC" CMPNAME="ADD_SCREEN" SCONAME="PROGRAM" VERSION="1" LANGU="P" DESCRIPT="Pool de módulos BDC" CMPTYPE="1" MTDTYPE="0" EDITORDER="1 " DISPID="0 " AUTHOR="NKIMOTO" CREATEDON="20120322" CHANGEDON="00000000" PARDECLTYP="0" PARPASSTYP="1" TYPTYPE="1" TYPE="BDC_PROG"/>
+   <parameter CLSNAME="ZCL_BDC" CMPNAME="ADD_SCREEN" SCONAME="DYNPRO" VERSION="1" LANGU="P" DESCRIPT="NÚmero de tela BDC" CMPTYPE="1" MTDTYPE="0" EDITORDER="2 " DISPID="0 " AUTHOR="NKIMOTO" CREATEDON="20120322" CHANGEDON="00000000" PARDECLTYP="0" PARPASSTYP="1" TYPTYPE="1" TYPE="BDC_DYNR"/>
+   <parameter CLSNAME="ZCL_BDC" CMPNAME="ADD_SCREEN" SCONAME="DYNBEGIN" VERSION="1" LANGU="P" DESCRIPT="Início BDC de uma tela" CMPTYPE="1" MTDTYPE="0" EDITORDER="3 " DISPID="0 " AUTHOR="NKIMOTO" CREATEDON="20120322" CHANGEDON="00000000" PARDECLTYP="0" PARPASSTYP="1" TYPTYPE="1" TYPE="BDC_START" PARVALUE="&apos;X&apos;" PAROPTIONL="X"/>
+   <source>METHOD ADD_SCREEN.
+
+  me-&gt;wa_bdc-program  = program.
+  me-&gt;wa_bdc-dynpro   = dynpro.
+  me-&gt;wa_bdc-dynbegin = dynbegin.
+
+  me-&gt;wa_last_screen = me-&gt;wa_bdc.
+
+  APPEND me-&gt;wa_bdc TO me-&gt;t_bdcdata.
+  CLEAR  me-&gt;wa_bdc.
+
+ENDMETHOD.</source>
+  </method>
+  <method CLSNAME="ZCL_BDC" CMPNAME="ADD_SUBSCR" VERSION="1" LANGU="P" DESCRIPT="Add subscreen detail to BDC Table" EXPOSURE="2" STATE="1" EDITORDER="7 " DISPID="0 " AUTHOR="NKIMOTO" CREATEDON="20120322" CHANGEDBY="NKIMOTO" CHANGEDON="20120327" MTDTYPE="0" MTDDECLTYP="0" R3RELEASE="701" BCMTDCAT="00" BCMTDSYN="0">
+   <parameter CLSNAME="ZCL_BDC" CMPNAME="ADD_SUBSCR" SCONAME="FVAL" VERSION="1" LANGU="P" DESCRIPT="Valor do campo BDC" CMPTYPE="1" MTDTYPE="0" EDITORDER="1 " DISPID="0 " AUTHOR="NKIMOTO" CREATEDON="20120322" CHANGEDON="00000000" PARDECLTYP="0" PARPASSTYP="1" TYPTYPE="1" TYPE="BDC_FVAL"/>
+   <source>method ADD_SUBSCR.
+
+  me-&gt;wa_bdc-fnam     = &apos;BDC_SUBSCR&apos;.
+  me-&gt;wa_bdc-fval     = fval.
+
+  APPEND me-&gt;wa_bdc TO me-&gt;t_bdcdata.
+  CLEAR  me-&gt;wa_bdc.
+
+endmethod.</source>
+  </method>
+  <method CLSNAME="ZCL_BDC" CMPNAME="CONSTRUCTOR" VERSION="1" LANGU="P" DESCRIPT="CONSTRUCTOR" EXPOSURE="2" STATE="1" EDITORDER="1 " DISPID="0 " AUTHOR="NKIMOTO" CREATEDON="20120322" CHANGEDON="00000000" MTDTYPE="2" MTDDECLTYP="0" R3RELEASE="701" BCMTDCAT="00" BCMTDSYN="0">
+   <parameter CLSNAME="ZCL_BDC" CMPNAME="CONSTRUCTOR" SCONAME="TRANSACTION" VERSION="1" LANGU="P" DESCRIPT="Char 20" CMPTYPE="1" MTDTYPE="2" EDITORDER="1 " DISPID="0 " AUTHOR="NKIMOTO" CREATEDON="20120322" CHANGEDON="00000000" PARDECLTYP="0" PARPASSTYP="1" TYPTYPE="1" TYPE="CHAR20"/>
+   <parameter CLSNAME="ZCL_BDC" CMPNAME="CONSTRUCTOR" SCONAME="DISMODE" VERSION="1" LANGU="P" DESCRIPT="Modo de processamento para CALL TRANSACTION USING..." CMPTYPE="1" MTDTYPE="2" EDITORDER="2 " DISPID="0 " AUTHOR="NKIMOTO" CREATEDON="20120322" CHANGEDON="00000000" PARDECLTYP="0" PARPASSTYP="1" TYPTYPE="1" TYPE="CTU_MODE"/>
+   <parameter CLSNAME="ZCL_BDC" CMPNAME="CONSTRUCTOR" SCONAME="UPDMODE" VERSION="1" LANGU="P" DESCRIPT="Modo de atualização para CALL TRANSACTION USING..." CMPTYPE="1" MTDTYPE="2" EDITORDER="3 " DISPID="0 " AUTHOR="NKIMOTO" CREATEDON="20120322" CHANGEDON="00000000" PARDECLTYP="0" PARPASSTYP="1" TYPTYPE="1" TYPE="CTU_UPDATE" PAROPTIONL="X"/>
+   <parameter CLSNAME="ZCL_BDC" CMPNAME="CONSTRUCTOR" SCONAME="CATTMODE" VERSION="1" LANGU="P" DESCRIPT="Modo Catt para CALL TRANSACTION USING..." CMPTYPE="1" MTDTYPE="2" EDITORDER="4 " DISPID="0 " AUTHOR="NKIMOTO" CREATEDON="20120322" CHANGEDON="00000000" PARDECLTYP="0" PARPASSTYP="1" TYPTYPE="1" TYPE="CTU_CATT" PAROPTIONL="X"/>
+   <parameter CLSNAME="ZCL_BDC" CMPNAME="CONSTRUCTOR" SCONAME="DEFSIZE" VERSION="1" LANGU="P" DESCRIPT="Tamanho standard de tela para CALL TRANSACTION USING..." CMPTYPE="1" MTDTYPE="2" EDITORDER="5 " DISPID="0 " AUTHOR="NKIMOTO" CREATEDON="20120322" CHANGEDON="00000000" PARDECLTYP="0" PARPASSTYP="1" TYPTYPE="1" TYPE="CTU_DEFSZE" PAROPTIONL="X"/>
+   <parameter CLSNAME="ZCL_BDC" CMPNAME="CONSTRUCTOR" SCONAME="RACOMMIT" VERSION="1" LANGU="P" DESCRIPT="COMMIT WORK não finalizado após CALL TRANSACTION USING..." CMPTYPE="1" MTDTYPE="2" EDITORDER="6 " DISPID="0 " AUTHOR="NKIMOTO" CREATEDON="20120322" CHANGEDON="00000000" PARDECLTYP="0" PARPASSTYP="1" TYPTYPE="1" TYPE="CTU_RAFC" PAROPTIONL="X"/>
+   <parameter CLSNAME="ZCL_BDC" CMPNAME="CONSTRUCTOR" SCONAME="NOBINPT" VERSION="1" LANGU="P" DESCRIPT="SY-BINPT=SPACE em CALL TRANSACTION USING..." CMPTYPE="1" MTDTYPE="2" EDITORDER="7 " DISPID="0 " AUTHOR="NKIMOTO" CREATEDON="20120322" CHANGEDON="00000000" PARDECLTYP="0" PARPASSTYP="1" TYPTYPE="1" TYPE="CTU_NOBIM" PAROPTIONL="X"/>
+   <parameter CLSNAME="ZCL_BDC" CMPNAME="CONSTRUCTOR" SCONAME="NOBIEND" VERSION="1" LANGU="P" DESCRIPT="SY-BINPT=SPACE após fim de dados em CALL TRANSACTION USING.." CMPTYPE="1" MTDTYPE="2" EDITORDER="8 " DISPID="0 " AUTHOR="NKIMOTO" CREATEDON="20120322" CHANGEDON="00000000" PARDECLTYP="0" PARPASSTYP="1" TYPTYPE="1" TYPE="CTU_NOBEN" PAROPTIONL="X"/>
+   <source>METHOD CONSTRUCTOR.
+
+  me-&gt;wa_ctu_params-dismode  = dismode.
+  me-&gt;wa_ctu_params-updmode  = updmode.
+  me-&gt;wa_ctu_params-cattmode = cattmode.
+  me-&gt;wa_ctu_params-defsize  = defsize.
+  me-&gt;wa_ctu_params-racommit = racommit.
+  me-&gt;wa_ctu_params-nobinpt  = nobinpt.
+  me-&gt;wa_ctu_params-nobiend  = nobiend.
+
+  me-&gt;v_transaction = transaction.
+
+  TRANSLATE me-&gt;v_transaction TO UPPER CASE.
+
+ENDMETHOD.</source>
+  </method>
+  <method CLSNAME="ZCL_BDC" CMPNAME="RUN" VERSION="1" LANGU="P" DESCRIPT="Run transaction" EXPOSURE="2" STATE="1" EDITORDER="2 " DISPID="0 " AUTHOR="NKIMOTO" CREATEDON="20120322" CHANGEDBY="NKIMOTO" CHANGEDON="20120327" MTDTYPE="0" MTDDECLTYP="0" R3RELEASE="701" BCMTDCAT="00" BCMTDSYN="0">
+   <source>METHOD RUN.
+
+  CALL TRANSACTION me-&gt;v_transaction
+             USING me-&gt;t_bdcdata
+      OPTIONS FROM me-&gt;wa_ctu_params
+     MESSAGES INTO me-&gt;t_message.
+
+ENDMETHOD.</source>
+  </method>
+ </CLAS>
+</nugget>
