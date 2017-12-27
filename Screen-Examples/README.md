@@ -1,4 +1,4 @@
-Originally published @ ABAPZombie - http://http://www.abapzombie.com/codigos-e-exemplos/abap-zombie-screen-examples-a-tela-de-selecao-turbo/
+Originally published @ ABAPZombie - http://www.abapzombie.com/codigos-e-exemplos/abap-zombie-screen-examples-a-tela-de-selecao-turbo/
 
 ---
 
