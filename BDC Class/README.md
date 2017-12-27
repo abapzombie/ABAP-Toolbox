@@ -1,0 +1,1 @@
+Class abstractions to improve readability of BDC recipes.
